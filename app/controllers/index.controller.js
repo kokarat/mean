@@ -8,10 +8,16 @@
 'use strict';
 
 exports.render = function(req,res){
+	var isLoggedIn = false
+
+	if(typeof req.session.remember !== 'undefined'){
+		isLoggedIn = req.session.remember;
+	}
+
 	//res.send('Hello world');
 	res.render('index',{
-		'title': 'Hello world',
-		'message':'How are thing'
+		title: 'Hello world',
+		isLoggedIn: isLoggedIn
 	});
 };
 
