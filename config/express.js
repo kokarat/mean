@@ -3,6 +3,7 @@ var morgan = require('morgan');
 var compression = require('compression');
 var bodyParser  = require('body-parser');
 var sass  = require('node-sass-middleware');
+var validator = require('express-validator');
 
 
 module.exports = function(){
@@ -20,6 +21,9 @@ module.exports = function(){
     extended:true
   }));
 
+  // Validator form
+  app.use(validator());
+
   // Body parser จาก json  ตอน post
   app.use(bodyParser.json());
 
@@ -32,6 +36,7 @@ module.exports = function(){
   Routes
   **/
   require('../app/routes/index.routes')(app);
+  require('../app/routes/user.routes')(app);
 
   // SASS
   app.use(sass({
