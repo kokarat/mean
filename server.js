@@ -8,7 +8,7 @@
 'use strict';
 
 var runningPort = 3000;
-// Set environment mode 
+// Set environment mode
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var express = require('./config/express');

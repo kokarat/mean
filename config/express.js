@@ -2,6 +2,7 @@ var express = require('express');
 var morgan = require('morgan');
 var compression = require('compression');
 var bodyParser  = require('body-parser');
+var sass  = require('node-sass-middleware');
 
 
 module.exports = function(){
@@ -23,9 +24,27 @@ module.exports = function(){
   app.use(bodyParser.json());
 
   // Use Jade template
-  app.set('view','./app/view');
-  app.set('view engine','jade'); 
+  app.set('views','./app/views');
+  app.set('view engine','jade');
 
+
+  /**
+  Routes
+  **/
   require('../app/routes/index.routes')(app);
+
+  // SASS
+  app.use(sass({
+    src:  './sass',
+    dest: './public/css',
+    debug: true,
+    outputStyle: 'compressed', //compact,expanded,compressed
+    prefix: '/css'
+
+  }));
+
+  // Use static files
+  app.use(express.static('./public'));
+
   return app;
 };
