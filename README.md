@@ -1,1 +1,2 @@
-# mean
+# MEAN Stack  
+  leaning MEAN stack
