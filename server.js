@@ -11,8 +11,15 @@ var runningPort = 3000;
 // Set environment mode
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
+/**
+Require
+*/
 var express = require('./config/express');
+var mongoose = require('./config/mongoose');
+
+var db = mongoose();// เรียกให้ connect mongoose
 var app  = express();
+
 app.listen(runningPort);
 module.exports = app;
 

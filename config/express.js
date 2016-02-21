@@ -8,6 +8,7 @@ var bodyParser  = require('body-parser');
 var sass  = require('node-sass-middleware');
 var validator = require('express-validator');
 var cookieSession = require('cookie-session');
+var config = require('./config');
 
 
 module.exports = function(){
@@ -16,7 +17,7 @@ module.exports = function(){
   //use cookie session
   app.use(cookieSession({
       name: 'session',
-      keys: ['D99xZcEKW9','3F72FZB33MR3X4Nh9MHBHvUe7IiYlo78']
+      keys: ['D99xZcEKW9','config.sessionSecret']
   }));
 
   // พิมพ์ ดูได้ใน terminal echo $NODE_ENV
@@ -46,7 +47,7 @@ module.exports = function(){
 
   /**
   =========================================================
-  Routes                                                
+  Routes
   =========================================================
   **/
   require('../app/routes/index.routes')(app);
