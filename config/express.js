@@ -22,6 +22,10 @@ module.exports = function(){
   // Body parser จาก json  ตอน post
   app.use(bodyParser.json());
 
+  // Use Jade template
+  app.set('view','./app/view');
+  app.set('view engine','jade'); 
+
   require('../app/routes/index.routes')(app);
   return app;
 };
