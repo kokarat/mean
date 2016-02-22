@@ -75,7 +75,8 @@ exports.store = function(req,res,next){
 exports.update = function(req,res,next){
 
     User.findOneAndUpdate({
-        username: req.user.username},
+        username: req.user.username,
+    },
         req.body,function(err,user){
 
             if(err){

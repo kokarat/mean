@@ -8,6 +8,7 @@ var bodyParser  = require('body-parser');
 var sass  = require('node-sass-middleware');
 var validator = require('express-validator');
 var cookieSession = require('cookie-session');
+var passport  = require('passport');
 var config = require('./config');
 
 
@@ -19,6 +20,10 @@ module.exports = function(){
       name: 'session',
       keys: ['D99xZcEKW9','config.sessionSecret']
   }));
+
+  // ใช้งาน passport
+  app.use(passport.initialize());
+  app.use(passport.session());
 
   // พิมพ์ ดูได้ใน terminal echo $NODE_ENV
   if(process.env.NODE_ENV === 'development'){
