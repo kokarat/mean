@@ -120,6 +120,7 @@ exports.login = function(req,res){
     if(req.body.remember === 'remember'){
         req.session.remember = true;
         req.session.email = req.body.email;
+        req.session.cookie.maxAge = 86400000; //milliseconds
     }
 
     //Validator

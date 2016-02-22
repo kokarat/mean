@@ -7,7 +7,8 @@ var compression = require('compression');
 var bodyParser  = require('body-parser');
 var sass  = require('node-sass-middleware');
 var validator = require('express-validator');
-var cookieSession = require('cookie-session');
+//var cookieSession = require('cookie-session');
+var expressSession = require('express-session');
 var passport  = require('passport');
 var config = require('./config');
 
@@ -16,9 +17,10 @@ module.exports = function(){
   var app = express();
 
   //use cookie session
-  app.use(cookieSession({
-      name: 'session',
-      keys: ['D99xZcEKW9','config.sessionSecret']
+  app.use(expressSession({
+      secret: 'D99xZcEKW9D99xZcEKW9D99xZc',
+      resave: false,
+      saveUnitialized: true
   }));
 
   // ใช้งาน passport
