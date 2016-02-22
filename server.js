@@ -16,9 +16,11 @@ Require
 */
 var express = require('./config/express');
 var mongoose = require('./config/mongoose');
+var passport = require('./config/passport');
 
 var db = mongoose();// เรียกให้ connect mongoose
 var app  = express();
+var passport = passport(); // เรียกใช้งาน passport
 
 app.listen(runningPort);
 module.exports = app;

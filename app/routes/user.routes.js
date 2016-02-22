@@ -1,5 +1,12 @@
 module.exports = function(app){
+
   var user = require('../controllers/user.controller');
+
+  //Sign up
+  app.route('/signup')
+     .get(user.signupView)
+     .post(user.signup);
+
   //login & logout
   app.post('/login',user.login);
   app.post('/logout',user.logout);
@@ -17,4 +24,5 @@ module.exports = function(app){
 
   //เตรียมข้อมูลเอาไว้รอ
   app.param('username',user.userByUsername);
+
 };

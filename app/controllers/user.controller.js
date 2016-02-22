@@ -157,4 +157,48 @@ exports.logout = function(req,res){
         isLoggedIn:false
     });
 
-}
+};
+
+/**
+ * Return sign up page
+ * @param req
+ * @param res
+ */
+exports.signupView = function(req,res){
+    res.render('signup',{
+        title: 'Sign up'
+    });
+};
+
+
+/**
+ * Sign up
+ * @param req
+ * @param res
+ */
+exports.signup = function(req,res){
+
+    if(!req.user){
+        // Insert to database with data from
+        var user = new User(req.body);
+        user.provider = 'local';
+
+        user.save(function(err){
+
+            if(err) return res.redirect('signup');
+
+            // Method login จะมากับ passport
+            req.login(user,function(err){
+
+                if(err) return next(err);
+
+                return res.redirect('/');
+
+            });
+
+        });
+
+    }else{
+        return res.redirect('/');
+    }
+};

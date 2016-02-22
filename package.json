@@ -1,8 +1,12 @@
 {
-  "name": "NodeJS WebApp by Kokarat",
+  "name": "kokarat-node-application",
+  "description": "NodeJs web application practice",
+  "version": "0.0.1",
+  "private": true,
   "dependencies": {
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
+    "connect-flash": "^0.1.1",
     "cookie-session": "^2.0.0-alpha.1",
     "debug": "^2.2.0",
     "express": "^4.13.4",
@@ -12,6 +16,11 @@
     "mongoose": "^4.4.4",
     "morgan": "^1.7.0",
     "node-sass-middleware": "^0.9.7",
-    "passport": "^0.3.2"
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/kokarat/mean.git"
   }
 }

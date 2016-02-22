@@ -8,7 +8,7 @@ var bodyParser  = require('body-parser');
 var sass  = require('node-sass-middleware');
 var validator = require('express-validator');
 //var cookieSession = require('cookie-session');
-var expressSession = require('express-session');
+var session = require('express-session');
 var passport  = require('passport');
 var config = require('./config');
 
@@ -17,7 +17,7 @@ module.exports = function(){
   var app = express();
 
   //use cookie session
-  app.use(expressSession({
+  app.use(session({
       secret: 'D99xZcEKW9D99xZcEKW9D99xZc',
       resave: false,
       saveUnitialized: true
@@ -25,7 +25,7 @@ module.exports = function(){
 
   // ใช้งาน passport
   app.use(passport.initialize());
-  app.use(passport.session());
+  app.use(passport.session()); // เริ่มการทำงาน
 
   // พิมพ์ ดูได้ใน terminal echo $NODE_ENV
   if(process.env.NODE_ENV === 'development'){
