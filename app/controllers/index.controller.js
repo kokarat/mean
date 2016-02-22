@@ -5,10 +5,10 @@
 * @Last Modified time: 2016-02-21 15:00:05
 */
 
-'use strict';
 
 exports.render = function(req,res){
-	var isLoggedIn = false
+
+	var isLoggedIn = false;
 
 	if(typeof req.session.remember !== 'undefined'){
 		isLoggedIn = req.session.remember;
