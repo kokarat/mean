@@ -109,39 +109,19 @@ exports.destroy = function(req,res,next){
 };
 
 
-/**
- Login
- */
-exports.login = function(req,res){
 
-    console.log(req.body);
+exports.loginView = function(req,res){
 
-    // Set session ถ้าคลิกปุ่ม remember
-    if(req.body.remember === 'remember'){
-        req.session.remember = true;
-        req.session.email = req.body.email;
-        req.session.cookie.maxAge = 86400000; //milliseconds
-    }
+    if(!req.user){
 
-    //Validator
-    req.checkBody('email','Invalid email').notEmpty().isEmail();
-    //req.sanitizeBody('email').normalizeEmail(); //ทำให้อยู่ในรูปแบบที่เราอยากได้ เช่นทำให้เป็นตัวเล็กหมด
-    var error = req.validationErrors(); // ถ้าไม่ error  จะไม่มีค่า
-
-    console.log(req.body.email);
-
-    if(error){
-        res.render('index',{
-            title: 'Errors:' + JSON.stringify(error),// JSON.stringify => แปลง JSON เป็น string
-            isLoggedIn: false
+        res.render('login',{
+           title: 'Login',
+           messages: req.flash('error') || req.flash('info')
         });
-        return;
-    }
 
-    res.render('index',{
-        title: 'Logged in as '+ req.body.email,
-        isLoggedIn:true
-    });
+    }else{
+        return res.redirect('/');
+    }
 };
 
 /**
@@ -149,13 +129,9 @@ exports.login = function(req,res){
  */
 exports.logout = function(req,res){
 
-    // Clear session
-    req.session = null;
+    req.logout();
+    res.redirect('/');
 
-    res.render('index',{
-        title: 'See you later',
-        isLoggedIn:false
-    });
 
 };
 
@@ -165,9 +141,18 @@ exports.logout = function(req,res){
  * @param res
  */
 exports.signupView = function(req,res){
-    res.render('signup',{
-        title: 'Sign up'
-    });
+
+    if(!req.user){
+
+        res.render('signup',{
+            title: 'Sign up',
+            messages: req.flash('error')
+        });
+
+    }else{
+        return res.redirect('/');
+    }
+
 };
 
 
@@ -185,7 +170,13 @@ exports.signup = function(req,res){
 
         user.save(function(err){
 
-            if(err) return res.redirect('signup');
+            if(err){
+
+                var message = getErrorMessage(err);
+
+                req.flash('error',message);
+                return res.redirect('/signup');
+            }
 
             // Method login จะมากับ passport
             req.login(user,function(err){
@@ -201,4 +192,79 @@ exports.signup = function(req,res){
     }else{
         return res.redirect('/');
     }
+};
+
+/**
+ * Error code handle
+ * @param err
+ * @returns {string}
+ */
+var getErrorMessage = function(err){
+
+    var message = '';
+
+    //mongoose error code
+    if(err.code){
+        switch (err.code){
+            case 11000 :
+            case 11001 :
+                message = 'Username already exists';
+                break;
+            default:
+                message = 'Something went wrong';
+        }
+    }else{
+        for (var errName in err.errors){
+
+            if(err.errors[errName].message){
+                message = err.errors[errName].message;
+            }
+        }
+    }
+
+    return message;
+};
+
+/**
+ *  Save user from provider
+ * @param req
+ * @param profile
+ * @param done
+ */
+exports.saveOAuthUserProfile = function(req,profile,done){
+
+    User.findOne({
+      provider: profile.provider,
+      provideId: provider.provideId
+    },function(err,user){
+
+        if(err){
+            return done(err);
+        } else {
+            if(!user){
+
+                var possibleUsername = profile.username || (profile.email ? profile.email.split('@')[0]: '');
+
+                User.findUniqueUsername(possibleUsername,null,function(availableUsername){
+
+                    profile.username = availableUsername;
+                    user = new User(profile); //save to database
+                    user.save(function(err){
+                        if(err){
+                            var message = getErrorMessage(err);
+                            req.flash('error',message);
+                            return res.redirect('/signup');
+                        }
+                    });
+
+                    return done(err,user); // save complete and return
+
+                });
+
+            }else{
+                return done(err,user);
+            }
+        }
+
+    });
 };

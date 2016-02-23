@@ -9,6 +9,7 @@ var sass  = require('node-sass-middleware');
 var validator = require('express-validator');
 //var cookieSession = require('cookie-session');
 var session = require('express-session');
+var flash   = require('connect-flash');
 var passport  = require('passport');
 var config = require('./config');
 
@@ -20,8 +21,11 @@ module.exports = function(){
   app.use(session({
       secret: 'D99xZcEKW9D99xZcEKW9D99xZc',
       resave: false,
-      saveUnitialized: true
+      //saveUnitialized: true
   }));
+
+  //ใช้งาน flash
+  app.use(flash());
 
   // ใช้งาน passport
   app.use(passport.initialize());

@@ -5,6 +5,11 @@ html
         link(href='css/main.css',rel='stylesheet')
 
     body
+
+        each  msg  in messages
+            div.flash
+              = msg
+
         form(name='signup',method='POST',action='/signup')
             div
                 label(for='username') Username
@@ -28,4 +33,11 @@ html
 
             div
                 input(type='submit',value='Sing up')
+
+
+            div
+                a(href='/oauth/facebook') Log in with Facebook
+
+            div
+                a(href='/oauth/google') Log in with Google
 

@@ -78,5 +78,29 @@ UserSchema.methods.authenticate = function(password){
   return this.password === this.hashPassword(password);
 };
 
+/**
+ * สร้าง username ถ้าซ้ำให้เติม suffix
+ * @param username
+ * @param suffix
+ * @param callback
+ */
+UserSchema.static.findUniqueUsername = function(username,suffix,callback){
+
+  var _this = this;
+  var possibleUsername = username + (suffix || '');
+  _this.findOne({
+    username: possibleUsername
+  },function(err,user){
+
+    if(!err){
+
+      if(!user) callback(possibleUsername);
+      else return _this.findUniqueUsername(username,(suffix || 0)+ 1,callback );
+    }
+
+  });
+
+};
+
 // สร้่าง model
 mongoose.model('User',UserSchema);

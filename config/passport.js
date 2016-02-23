@@ -25,5 +25,7 @@ module.exports = function(){
 
     // เรียกใช้งาน local strategies
     require('./strategies/local.js')();
+    require('./strategies/facebook.js')();
+    require('./strategies/google.js')();
 
 };
