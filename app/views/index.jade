@@ -17,4 +17,17 @@ html
       a(href='/signup') Sign up
     div
       a(href='/login') Login
-        
+
+
+  div(ng-app='Hello' ng-controller='NameController')
+
+      div
+          label(for='yourNmae') Your name is
+          input(name='yourName',type='text',ng-model='yourName')
+
+      div
+          | {{ yourName | sayhello }}
+
+
+  script(type='text/javascript',src='libs/angular/angular.min.js')
+  script(type='text/javascript',src='app.js')

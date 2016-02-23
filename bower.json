@@ -1,0 +1,25 @@
+{
+  "name": "kokarat-node-application",
+  "description": "NodeJs web application practice",
+  "main": "",
+  "authors": [
+    "Anat Kokarat <a.kokarat@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "MEAN"
+  ],
+  "homepage": "http://www.kokarat.me",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "1.5.0"
+  }
+}
