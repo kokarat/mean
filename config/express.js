@@ -31,6 +31,7 @@ module.exports = function(){
   app.use(passport.initialize());
   app.use(passport.session()); // เริ่มการทำงาน
 
+  // NODE_ENV=development  // set node env to development
   // พิมพ์ ดูได้ใน terminal echo $NODE_ENV
   if(process.env.NODE_ENV === 'development'){
     //ใช้ morgan ในการ debug
